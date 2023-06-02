@@ -1,0 +1,14 @@
+.logo{
+    margin-bottom: 30px;
+    width: 150px;
+}
+@media only screen and (max-width: 750px) {
+    .logo{
+        width: 30px;
+        margin-left: 0;
+    }
+  }
+  .form-label {
+    color: #d90057;
+    font-weight: 700;
+  }

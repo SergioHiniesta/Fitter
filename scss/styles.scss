@@ -1,0 +1,10 @@
+// Variables modificadas
+$principal: #21889e;
+$secundario: #d90057;
+$primary: $principal;
+$secondary: $secundario;
+$input-focus-border-color: $secondary;
+$active-bg: $secondary;
+$input-file-bg-color: $secondary;
+@import "../bootstrap-5.2.3/scss/bootstrap.scss";
+

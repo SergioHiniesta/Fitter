@@ -1,0 +1,31 @@
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url(../images/login.jpg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+.card-body {
+  background-color: #21889e;
+  border-radius: 2em;
+}
+.card-body label{
+  opacity: 1;
+}
+
+.form-label {
+  color: #d90057;
+  font-weight: 700;
+}
+
+.redireccion:hover {
+  text-decoration: none;
+}
+
+.btn{
+  background-color: #d90057;
+}
