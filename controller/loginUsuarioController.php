@@ -14,6 +14,8 @@ require_once("../model/Utils.php");
 // Inicio sesion
 session_start();
 
+$mensaje="";
+
 //Si nos llegan datos de un cliente, implica que es el formulario el que llama al controlador
 if (isset($_POST["email"]) && isset($_POST["password"])) {
     $usuario = array();
@@ -58,6 +60,7 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
         header("Location:../controller/mainController.php");
     }else{
         // Si no lo mando a login nuevamente 
+        $mensaje = "Email o contraseña incorrectos, inténtalo de nuevo";
         include("../views/login.php");
     }
 

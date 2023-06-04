@@ -72,6 +72,8 @@ if (isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["nombre"
         Utils::correo_registro($usuario);
 
         $mensaje = "El usuario se registro correctamente";
+        // Despues de ingresar el usuario lo mando a la vista de activacion
+        include("../views/activarUsuario.php");
     } else {
         if ($resultado == null) {
 
@@ -83,13 +85,10 @@ if (isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["nombre"
         }
 
 
-        $mensaje = "Nombre de usuario o email ya en uso";
+        $mensaje = "Nombre de usuario o email ya en uso, inténtelo de nuevo";
 
-        header("Location:../controller/registroController.php");
+        include("../views/registroUsuario.php");
     }
-
-    // Despues de ingresar el usuario lo mando a la vista de activacion
-    include("../views/activarUsuario.php");
 } else {
     // Si no recibe los datos carga la vista del registro 
     include("../views/registroUsuario.php");

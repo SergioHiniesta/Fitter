@@ -51,7 +51,7 @@ if (isset($_POST["texto"])) {
     $resultado = $gestorPost->addPost($post, $conexPDO);
 
     if ($resultado != null)
-    $mensaje = "El usuario se registro correctamente"; 
+    $mensaje = "El post se publicó correctamente"; 
 
     else
         $mensaje = "Ha habido un fallo al acceder a la Base de Datos";

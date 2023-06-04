@@ -39,14 +39,15 @@ class Evento{
 
             try {
 
-                $sentencia = $conexPDO->prepare("INSERT INTO fitter.evento ( titulo, descripcionEvento, fileEvento, precio, usuario_idUsuario) 
-                VALUES ( :titulo, :descripcionEvento, :fileEvento, :precio, :usuario_idUsuario)");
+                $sentencia = $conexPDO->prepare("INSERT INTO fitter.evento ( titulo, descripcionEvento, fileEvento, precio, usuario_idUsuario, numParticipantes) 
+                VALUES ( :titulo, :descripcionEvento, :fileEvento, :precio, :usuario_idUsuario, :numParticipantes)");
 
                 $sentencia->bindParam(":titulo", $evento["titulo"]);
                 $sentencia->bindParam(":descripcionEvento", $evento["descripcionEvento"]);
                 $sentencia->bindParam(":fileEvento", $evento["fileEvento"]);
                 $sentencia->bindParam(":precio", $evento["precio"]);
                 $sentencia->bindParam(":usuario_idUsuario", $evento["usuario_idUsuario"]);
+                $sentencia->bindParam(":numParticipantes", $evento["numParticipantes"]);
 
                 $result = $sentencia->execute();
             } catch (PDOException $e) {

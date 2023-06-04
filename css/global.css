@@ -1,14 +1,48 @@
+body{
+  font-family: Helvetica;
+  color: #343635;
+}
 .logo{
     margin-bottom: 30px;
     width: 150px;
 }
-@media only screen and (max-width: 750px) {
+
+h6{
+  padding-left: 5px;
+  line-height: 19px;
+  font-size: 25px;
+}
+hr.separadorTitulo{
+  height: 3px;
+  border-top: 5px solid;
+  border-radius: 5px;
+  border-color:#d90057;
+  margin-left:10px;
+  opacity:1;
+  width:350px;
+}
+
+@media only screen and (max-width: 767px) {
     .logo{
         width: 30px;
         margin-left: 0;
+    }
+    .ms-1.d-none.d-sm-inline{
+      display: none !important;
+    }
+    h6.cerrarSesionTitulo{
+      display: none !important;
     }
   }
   .form-label {
     color: #d90057;
     font-weight: 700;
+  }
+  .nav-item:hover{
+    transform: scale(1.2);
+  }
+
+.cerrarSesion{
+    position: fixed;
+    top:93vh;
   }

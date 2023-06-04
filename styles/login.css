@@ -29,3 +29,6 @@ body {
 .btn{
   background-color: #d90057;
 }
+em{
+  color: #d90057 !important;
+}

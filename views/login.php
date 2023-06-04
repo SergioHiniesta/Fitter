@@ -8,7 +8,8 @@
     <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
     <title>Login</title>
     <link rel="stylesheet" href="../styles/login.css">
-    <link rel="stylesheet" href="../css/styles.css"></head>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
 
 <body>
 
@@ -21,12 +22,12 @@
 
                             <div class="form-outline mb-4">
                                 <label class="form-label" for="">EMAIL</label>
-                                <input type="email" id="" name="email" class="form-control form-control-lg" />
+                                <input type="email" id="" name="email" placeholder="Ingrese su email" class="form-control form-control-lg" required />
                             </div>
 
                             <div class="form-outline mb-4">
                                 <label class="form-label" for="">CONTRASEÑA</label>
-                                <input type="password" id="" name="password" class="form-control form-control-lg" />
+                                <input type="password" id="" name="password" placeholder="Ingrese su contraseña" class="form-control form-control-lg" required />
                             </div>
 
                             <div class="row">
@@ -42,12 +43,58 @@
 
                         </div>
                     </div>
+                    <?php if (!empty($mensaje)) {
+                        print('<div class="alert mt-3 alert-danger" role="alert">
+  ' . $mensaje . ' <a href="#" class="alert-link">
+</div>');
+                    } ?>
                 </div>
         </form>
     </div>
 
 
     <script src="../bootstrap-5.2.3/dist/js/bootstrap.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.0/dist/jquery.validate.js"></script>
+
+    <script src="../bootstrap-5.2.3/dist/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#form').validate({
+                rules: {
+
+                    password: {
+                        required: true
+                    },
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                },
+                messages: {
+
+                    password: {
+                        required: "Por favor ingresa una contraseña",
+                        minlength: "La contraseña deberá tener al menos 8 carácteres"
+                    },
+
+                    email: "Por favor ingresa un correo válido"
+
+                },
+                errorElement: "em",
+                
+                highlight: function(element, errorClass, validClass) {
+                    $(element).parents(".col-sm-10").addClass("has-error").removeClass("has-success");
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).parents(".col-sm-10").addClass("has-success").removeClass("has-error");
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

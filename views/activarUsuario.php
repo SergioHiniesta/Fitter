@@ -39,6 +39,11 @@
 
                         </div>
                     </div>
+                    <?php if (!empty($mensaje)) {
+                        print('<div class="alert mt-3 alert-danger" role="alert">
+  ' . $mensaje . ' <a href="#" class="alert-link">
+</div>');
+                    } ?>
                 </div>
 
 
