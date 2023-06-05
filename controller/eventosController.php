@@ -11,6 +11,11 @@ require_once("../model/Utils.php");
 
 session_start();
 
+// Si el id de la sesion es null, es decir no hay ningun usuario logeado este lo manda al login de nuevo
+if($_SESSION["id"]==null){
+    header("Location:../controller/loginUsuarioController.php");
+}
+
 $gestorEvento = new Evento();
 
 //Nos conectamos a la Bd

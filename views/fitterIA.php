@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 
-    <title>Eventos</title>
+    <title>Inicio</title>
     <link rel="stylesheet" href="">
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/global.css">
@@ -87,78 +87,68 @@
             <div class="col">
 
                 <div class="row">
-                    <h1 class="text-secondary pt-3" for="">Eventos</h1>
+                    <h1 class="text-secondary pt-3" for="">Fitter-IA</h1>
                     <div class="row">
                         <hr class="separadorTitulo">
                     </div>
-                    <div class="col-lg-9 px-3">
-                        <form action="../controller/eventosController.php" method="POST" enctype="multipart/form-data" autocomplete="off">
-                            <h3 for="" class="">Crea tu nuevo evento</h3>
-                            <div class="my-3">
-                                <label for="" class="form-label">Título</label>
-                                <input type="text" name="titulo" id="titulo" class="form-control" placeholder="Ingrese el título del evento" required>
-                                <label for="" class="form-label">Descripción</label>
-                                <textarea class="form-control" name="descripcionEvento" id="" rows="3" required></textarea>
-                                <label for="" class="form-label">Número de participantes</label>
-                                <input value="0" min="0" type="number" style="width: 70px;" id="numParticipantes" name="numParticipantes" class="form-control" required />
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="mb-3">
-                                        <input type="file" class="form-control" name="imagen" id="imagen" accept="image/*">
-                                    </div>
-                                </div>
-                                <div class="col-md-8 d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-secondary mb-3">Enviar</button>
-                                </div>
+
+
+                    <div class="row d-flex justify-content-center">
+                        <div class="col m-3 " style="max-width: 1150px;">
+                            <h4 class="text-secondary">Consejos:</h4>
+                            <p>Esto es un chat con inteligencia artificial,te podrá servir de ayuda en temas de nutrición,
+                                rutinas, contrastar  información deportiva, etc. Cada persona es diferente por lo tanto recuerda que lo mejor
+                                es acudir a un profesional para que evalue tus necesidades físicas. Disfruta de Fitter-IA y sigue luchando por tus objetivos! </p>
+
+                            <div id="chat" class="row mb-3 d-flex align-items-center flex-column">
 
                             </div>
-                        </form>
+
+                            <form id="ia" style="padding: 0; margin:0;">
+
+                                <input type="search" id="pregunta" class=" form-control rounded w-100" placeholder="Pregúntame lo que quieras" aria-label="Search" aria-describedby="search-addon" />
+
+                                <button type="submit" id="enviar" class="btn btn-secondary mb-3 mt-3">Enviar</button>
+                            </form>
 
 
-                        <!-- EVENTOS -->
-
-                        <ul id="posts" class="d-flex align-items-center flex-column  py-5" style="padding-left: 0;">
-
-                        <?php
-                            for ($i = 0; $i < count($eventos); $i++) {
-                                print('
-                            <li class="card w-100 mb-4" style="max-width:700px;">
-                                <div class="row my-2 mx-1">
-                                    <h3>' . $eventos[$i]['titulo'] . '</h3>
-                                    <hr>
-                                    <p>' . $eventos[$i]['descripcionEvento'] . '</p>
-                                    <span class="text-secondary">Máximo de participantes: ' . $eventos[$i]['numParticipantes'] . '</span>
-                                </div>
-                                <div class="row">
-                                    <img src="' . $eventos[$i]['fileEvento'] . '" class="img-fluid" alt="">
-                                </div>
-                                <div class="bg-secondary d-flex justify-content-center ">
-                                    <a href="" class="" style="text-decoration: none; color:white;">
-                                        <b>Participantes</b>
-                                    </a>
-                                </div>
-                            </li>');
-                        } ?>
-
-                        </ul>
-
-
-                    </div>
-                    <div class="col-lg-3 ">
-
+                        </div>
                     </div>
 
                 </div>
-
-
             </div>
         </div>
+    </div>
     </div>
 
 
     <script src="../bootstrap-5.2.3/dist/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            $("#ia").on("submit", function(e) {
+                e.preventDefault();
+                $valor = $("#pregunta").val();
+                $pregunta = '<div id="gregunta" class="card p-2 w-75 align-self-end m-1"><h5 class="text-secondary">Pregunta:</h5><p>' + $valor + '</p></div>';
+                $("#chat").append($pregunta);
+                $("#pregunta").val('');
+                $loader = '<div class="spinner-border align-self-start text-secondary" id="loader" role="status"></div>';
+                $("#chat").append($loader);
 
+                $.ajax({
+                    url: '../services/fitterIA.php',
+                    type: 'POST',
+                    data: 'text=' + $valor,
+                    success: function(data) {
+                        $respuesta = '<div id="respuesta" class="card p-2 w-75 align-self-start m-1"><h5 class="text-secondary">Fitter-IA:</h5><p>' + data + '</p></div>';
+                        $("#chat").append($respuesta);
+                        $("html, body").scrollTop($(document).height());
+                        $("#loader").remove();
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>
