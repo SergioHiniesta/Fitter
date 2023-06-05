@@ -6,7 +6,7 @@ $iMaxTokens = 3000;
 $top_p = 1;
 $frequency_penalty = 0.5;
 $presence_penalty = 0;
-$OPENAI_API_KEY = "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";
+$OPENAI_API_KEY = "";
 $sModel = "text-davinci-003";
 $prompt = $getMesg = ($_POST['text']);
 $ch = curl_init();
