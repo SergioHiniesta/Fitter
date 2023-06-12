@@ -17,7 +17,7 @@ class Evento{
         if ($conexPDO != null) {
             try {
             
-                $sentencia = $conexPDO->prepare("SELECT * FROM fitter.evento");
+                $sentencia = $conexPDO->prepare("SELECT * FROM fitter.evento order by idEvento desc");
                 $sentencia->execute();
 
                 return $sentencia->fetchAll();
@@ -34,7 +34,7 @@ class Evento{
         if ($conexPDO != null) {
             try {
                 //Introducimos la sentencia a ejecutar con prepare statement
-                $sentencia = $conexPDO->prepare("SELECT * FROM fitter.evento where evento.usuario_idUsuario=?");
+                $sentencia = $conexPDO->prepare("SELECT * FROM fitter.evento where evento.usuario_idUsuario=? order by idEvento desc");
 
                 // BindParam del email
                 $sentencia->bindParam(1, $idUsuario);
