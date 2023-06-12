@@ -27,6 +27,55 @@ class Post{
         }
     }
 
+    public function getComentariosPost($idPost,$conexPDO)
+    {
+
+        if ($conexPDO != null) {
+            try {
+                //Introducimos la sentencia a ejecutar con prepare statement
+                $sentencia = $conexPDO->prepare("SELECT * FROM fitter.comentario
+                INNER JOIN fitter.post ON post.idPost = comentario.post_idPost
+                INNER JOIN fitter.perfil ON comentario.usuario_idUsuario = perfil.usuario_idUsuario
+                WHERE comentario.post_idPost = ?");
+
+                // BindParam del email
+                $sentencia->bindParam(1, $idPost);
+
+                //Ejecutamos la sentencia
+                $sentencia->execute();
+
+                //Devolvemos los datos de los personajes
+                return $sentencia->fetchAll();
+            } catch (PDOException $e) {
+                print("Error al acceder a BD" . $e->getMessage());
+            }
+        }
+    }
+
+    public function getInfoPost($idPost,$conexPDO)
+    {
+
+        if ($conexPDO != null) {
+            try {
+                //Introducimos la sentencia a ejecutar con prepare statement
+                $sentencia = $conexPDO->prepare("SELECT * FROM fitter.post
+                INNER JOIN fitter.perfil ON post.usuario_idUsuario = perfil.usuario_idUsuario
+                WHERE post.idPost = ?");
+
+                // BindParam del email
+                $sentencia->bindParam(1, $idPost);
+
+                //Ejecutamos la sentencia
+                $sentencia->execute();
+
+                //Devolvemos los datos de los personajes
+                return $sentencia->fetchAll();
+            } catch (PDOException $e) {
+                print("Error al acceder a BD" . $e->getMessage());
+            }
+        }
+    }
+    
     public function getPostInicio($idUsuario,$conexPDO)
     {
 

@@ -26,6 +26,50 @@ class Evento{
             }
         }
     }
+    
+    
+    public function getEventosUsuario($idUsuario,$conexPDO)
+    {
+
+        if ($conexPDO != null) {
+            try {
+                //Introducimos la sentencia a ejecutar con prepare statement
+                $sentencia = $conexPDO->prepare("SELECT * FROM fitter.evento where evento.usuario_idUsuario=?");
+
+                // BindParam del email
+                $sentencia->bindParam(1, $idUsuario);
+
+                //Ejecutamos la sentencia
+                $sentencia->execute();
+
+                //Devolvemos los datos de los personajes
+                return $sentencia->fetchAll();
+            } catch (PDOException $e) {
+                print("Error al acceder a BD" . $e->getMessage());
+            }
+        }
+    }
+    public function getInfoEvento($idEvento,$conexPDO)
+    {
+
+        if ($conexPDO != null) {
+            try {
+                //Introducimos la sentencia a ejecutar con prepare statement
+                $sentencia = $conexPDO->prepare("SELECT * FROM fitter.evento where evento.idEvento=?");
+
+                // BindParam del email
+                $sentencia->bindParam(1, $idEvento);
+
+                //Ejecutamos la sentencia
+                $sentencia->execute();
+
+                //Devolvemos los datos de los personajes
+                return $sentencia->fetchAll();
+            } catch (PDOException $e) {
+                print("Error al acceder a BD" . $e->getMessage());
+            }
+        }
+    }
 
 
     /**

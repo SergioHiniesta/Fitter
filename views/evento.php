@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 
-    <title>Fitter-IA</title>
+    <title><?php print($datosEvento[0]['titulo']) ?></title>
     <link rel="stylesheet" href="">
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/global.css">
@@ -15,9 +15,8 @@
 
 <body>
     <style>
-        div.card {
-            max-width: 75%;
-            width: fit-content;
+        body {
+            overflow-x: hidden;
         }
     </style>
     <div class="container-fluid">
@@ -42,7 +41,7 @@
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a href="../controller/perfilController.php?usuario=<?php session_start(); print($_SESSION["nombre"]) ?>" class="nav-link active  align-middle px-0">
+                            <a href="../controller/perfilController.php?usuario=<?php print($_SESSION["nombre"]) ?>" class="nav-link active  align-middle px-0">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" fill="currentColor" class="bi bi-person mb-2" viewBox="0 0 16 16">
                                     <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z" />
                                 </svg>
@@ -93,32 +92,58 @@
             <div class="col">
 
                 <div class="row">
-                    <h1 class="text-secondary pt-3" for="">Fitter-IA</h1>
+                    <h1 class="text-secondary pt-3" for="">EVENTO</h1>
                     <div class="row">
                         <hr class="separadorTitulo">
                     </div>
 
-
-                    <div class="row d-flex justify-content-center">
-                        <div class="col m-3 " style="max-width: 1150px;">
-                            <h4 class="text-secondary">Consejos:</h4>
-                            <p>Esto es un chat con inteligencia artificial,te podrá servir de ayuda en temas de nutrición,
-                                rutinas, contrastar información deportiva, etc. Cada persona es diferente por lo tanto recuerda que lo mejor
-                                es acudir a un profesional para que evalue tus necesidades físicas. Disfruta de Fitter-IA y sigue luchando por tus objetivos! </p>
-
-                            <div id="chat" class="row mb-3 d-flex align-items-center flex-column">
-
+                    <div class="row d-flex justify-content-center m-1 mt-4">
+                        <div class="card w-100 mb-4" style="max-width:800px;">
+                            <div class="row my-2 mx-1">
+                                <h3> <?php print($datosEvento[0]['titulo']) ?></h3>
+                                <hr>
+                                <p><?php print($datosEvento[0]['descripcionEvento']) ?></p>
+                                <span class="text-secondary"><?php print($numParticipantes) ?>/<?php print($datosEvento[0]['numParticipantes']) ?> Participantes</span>
                             </div>
+                            <div class="row">
+                                <img src="<?php print($datosEvento[0]['fileEvento']) ?>" class="img-fluid" alt="">
+                            </div>
+                            <?php if ($participa == 1) {
+                                print('<a class="btn btn-secondary mt-2 mb-2" href="../controller/dejarParticiparController.php?evento='.$datosEvento[0]['idEvento'].'" role="button">Dejar de participar</a>
 
-                            <form id="ia" style="padding: 0; margin:0;">
+                                ');
+                            } else {
+                                print('<a class="btn btn-secondary mt-2 mb-2" href="../controller/participarController.php?evento='.$datosEvento[0]['idEvento'].'" role="button">Participar</a>
+                                    ');
+                            }
 
-                                <input type="search" id="pregunta" class=" form-control rounded w-100" placeholder="Pregúntame lo que quieras" aria-label="Search" aria-describedby="search-addon" />
-
-                                <button type="submit" id="enviar" class="btn btn-secondary mb-3 mt-3">Enviar</button>
-                            </form>
-
+                            ?>
 
                         </div>
+                      
+
+                        <ul id="participantes" class="row mb-3 d-flex align-items-center flex-column">
+                            <?php
+                            for ($i = 0; $i < count($participantes); $i++) {
+                                print('<li class="card w-100 mb-2" style="max-width:800px;">
+                        <div class="row my-2 mx-1">
+                        <div class="col-3 ">
+                          <img src="' . $participantes[$i]['avatar'] . '" class="rounded-circle border" style="width: 100%; height:auto; max-width:70px;" alt="">
+                     </div>
+                        <div class="col-9 d-flex align-items-center">
+                           <a href="../controller/perfilController.php?usuario=' . $participantes[$i]['nombrePerfil'] . '" class="link-secondary" style="text-decoration: none;">
+                          <h2>' . $participantes[$i]['nombrePerfil']  . '</h2>
+                         </a>
+                            
+                      </div>
+                           </div>
+                         
+                         </li>');
+                            } ?>
+
+                        </ul>
+
+
                     </div>
 
                 </div>
@@ -127,34 +152,6 @@
     </div>
     </div>
 
-
-    <script src="../bootstrap-5.2.3/dist/js/bootstrap.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-    <script>
-        $(document).ready(function() {
-            $("#ia").on("submit", function(e) {
-                e.preventDefault();
-                $valor = $("#pregunta").val();
-                $pregunta = '<div id="gregunta" class="card p-2 w-75 align-self-end m-1"><h5 class="text-secondary">Pregunta:</h5><p>' + $valor + '</p></div>';
-                $("#chat").append($pregunta);
-                $("#pregunta").val('');
-                $loader = '<div class="spinner-border align-self-start text-secondary" id="loader" role="status"></div>';
-                $("#chat").append($loader);
-
-                $.ajax({
-                    url: '../services/fitterIA.php',
-                    type: 'POST',
-                    data: 'text=' + $valor,
-                    success: function(data) {
-                        $respuesta = '<div id="respuesta" class="card p-2 w-75 align-self-start m-1"><h5 class="text-secondary">Fitter-IA:</h5><p>' + data + '</p></div>';
-                        $("#chat").append($respuesta);
-                        $("html, body").scrollTop($(document).height());
-                        $("#loader").remove();
-                    }
-                });
-            });
-        });
-    </script>
 </body>
 
 </html>

@@ -61,9 +61,10 @@
                         </li>
                         <li class="nav-item ">
                             <a href="../views/fitterIA.php" class="nav-link active  align-middle px-0">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" fill="currentColor" class="bi bi-question-lg mb-2" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M4.475 5.458c-.284 0-.514-.237-.47-.517C4.28 3.24 5.576 2 7.825 2c2.25 0 3.767 1.36 3.767 3.215 0 1.344-.665 2.288-1.79 2.973-1.1.659-1.414 1.118-1.414 2.01v.03a.5.5 0 0 1-.5.5h-.77a.5.5 0 0 1-.5-.495l-.003-.2c-.043-1.221.477-2.001 1.645-2.712 1.03-.632 1.397-1.135 1.397-2.028 0-.979-.758-1.698-1.926-1.698-1.009 0-1.71.529-1.938 1.402-.066.254-.278.461-.54.461h-.777ZM7.496 14c.622 0 1.095-.474 1.095-1.09 0-.618-.473-1.092-1.095-1.092-.606 0-1.087.474-1.087 1.091S6.89 14 7.496 14Z" />
+                                <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" fill="currentColor" class="bi bi-cpu mb-2" viewBox="0 0 16 16">
+                                    <path d="M5 0a.5.5 0 0 1 .5.5V2h1V.5a.5.5 0 0 1 1 0V2h1V.5a.5.5 0 0 1 1 0V2h1V.5a.5.5 0 0 1 1 0V2A2.5 2.5 0 0 1 14 4.5h1.5a.5.5 0 0 1 0 1H14v1h1.5a.5.5 0 0 1 0 1H14v1h1.5a.5.5 0 0 1 0 1H14v1h1.5a.5.5 0 0 1 0 1H14a2.5 2.5 0 0 1-2.5 2.5v1.5a.5.5 0 0 1-1 0V14h-1v1.5a.5.5 0 0 1-1 0V14h-1v1.5a.5.5 0 0 1-1 0V14h-1v1.5a.5.5 0 0 1-1 0V14A2.5 2.5 0 0 1 2 11.5H.5a.5.5 0 0 1 0-1H2v-1H.5a.5.5 0 0 1 0-1H2v-1H.5a.5.5 0 0 1 0-1H2v-1H.5a.5.5 0 0 1 0-1H2A2.5 2.5 0 0 1 4.5 2V.5A.5.5 0 0 1 5 0zm-.5 3A1.5 1.5 0 0 0 3 4.5v7A1.5 1.5 0 0 0 4.5 13h7a1.5 1.5 0 0 0 1.5-1.5v-7A1.5 1.5 0 0 0 11.5 3h-7zM5 6.5A1.5 1.5 0 0 1 6.5 5h3A1.5 1.5 0 0 1 11 6.5v3A1.5 1.5 0 0 1 9.5 11h-3A1.5 1.5 0 0 1 5 9.5v-3zM6.5 6a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z" />
                                 </svg>
+
                                 <h6 class="ms-1 d-none d-sm-inline">Fitter-IA</h6>
                             </a>
                         </li>
@@ -89,13 +90,13 @@
                 <div class="row">
                     <h1 class="text-secondary pt-3" for="">Inicio</h1>
                     <div class="row">
-                    <hr class="separadorTitulo">
+                        <hr class="separadorTitulo">
                     </div>
                     <div class="col-lg-9 px-3">
 
                         <form action="../controller/subirPostController.php" method="POST" enctype="multipart/form-data" autocomplete="off">
                             <div class="mb-3">
-                            <h3 for="" class="">¿Qué haces hoy?</h3>
+                                <h3 for="" class="">¿Qué haces hoy?</h3>
                                 <textarea class="form-control" name="texto" id="" rows="3" required></textarea>
                             </div>
                             <div class="row">
@@ -116,6 +117,10 @@
 
 
                             <?php
+                            if(empty($posts)){
+                                print('<h2 class=" pt-3" for="">Aún no sigues a nadie, busca a otros usuarios en explorar</h2>');
+
+                            }else{
                             for ($i = 0; $i < count($posts); $i++) {
                                 print('<li class="card w-100 mb-4" style="max-width:700px;">
                         <div class="row my-2 mx-1">
@@ -133,12 +138,12 @@
                       <img src="' . $posts[$i]['filePost'] . '" class="img-fluid" alt="">
                          </div>
                          <div class="bg-secondary d-flex justify-content-center ">
-                          <a href="" class="" style="text-decoration: none; color:white;">
+                          <a href="../controller/postController.php?post=' . $posts[$i]['idPost'] . '" class="" style="text-decoration: none; color:white;">
                         <b>Comentarios</b>
                         </a>
                         </div>
                          </li>');
-                            } ?>
+                            }} ?>
                         </ul>
 
 

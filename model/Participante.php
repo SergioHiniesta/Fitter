@@ -27,6 +27,52 @@ class Participante{
         }
     }
 
+    public function getParticipantesEvento($idEvento,$conexPDO)
+    {
+
+        if ($conexPDO != null) {
+            try {
+                //Introducimos la sentencia a ejecutar con prepare statement
+                $sentencia = $conexPDO->prepare("SELECT * FROM fitter.participante
+                INNER JOIN fitter.perfil ON perfil.usuario_idUsuario = participante.usuario_idUsuario
+                WHERE participante.evento_idEvento = ?");
+
+                // BindParam del email
+                $sentencia->bindParam(1, $idEvento);
+
+                //Ejecutamos la sentencia
+                $sentencia->execute();
+
+                //Devolvemos los datos de los personajes
+                return $sentencia->fetchAll();
+            } catch (PDOException $e) {
+                print("Error al acceder a BD" . $e->getMessage());
+            }
+        }
+    }
+    public function getParticipante($idUsuario,$idEvento,$conexPDO)
+    {
+
+        if ($conexPDO != null) {
+            try {
+                //Introducimos la sentencia a ejecutar con prepare statement
+                $sentencia = $conexPDO->prepare("SELECT * FROM fitter.participante where usuario_idUsuario=? && evento_idEvento=?");
+
+                // BindParam del email
+                $sentencia->bindParam(1, $idUsuario);
+                $sentencia->bindParam(2, $idEvento);
+
+                //Ejecutamos la sentencia
+                $sentencia->execute();
+
+                //Devolvemos los datos de los personajes
+                return $sentencia->fetchAll();
+            } catch (PDOException $e) {
+                print("Error al acceder a BD" . $e->getMessage());
+            }
+        }
+    }
+
 
     /**
      * Inserta un participante a la base de datos recibiendo un array con todos los datos requeridos
@@ -58,25 +104,24 @@ class Participante{
      * Funcion que borra un participante a partir del id recibido como parametro
      */
 
-    public function delParticipante($idParticipante, $conexPDO)
+    public function delParticipante($idUsuario,$idEvento, $conexPDO)
     {
         $result = null;
-
-        if (isset($idParticipante) && is_numeric($idParticipante)) {
 
 
             if ($conexPDO != null) {
                 try {
                     
-                    $sentencia = $conexPDO->prepare("DELETE  FROM fitter.participante where idParticipante=?");
-                    $sentencia->bindParam(1, $idParticipante);
+                    $sentencia = $conexPDO->prepare("DELETE  FROM fitter.participante where usuario_idUsuario=? && evento_idEvento=?");
+                    $sentencia->bindParam(1, $idUsuario);
+                    $sentencia->bindParam(2, $idEvento);
 
                     $result = $sentencia->execute();
                 } catch (PDOException $e) {
                     print("Error al borrar" . $e->getMessage());
                 }
             }
-        }
+        
 
         return $result;
     }

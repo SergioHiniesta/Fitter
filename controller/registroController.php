@@ -62,6 +62,8 @@ if (isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["nombre"
 
     $gestorPerfil = new Perfil();
 
+    
+
     $resultadoPerfil = $gestorPerfil->addPerfil($perfil, $conexPDO);
 
 

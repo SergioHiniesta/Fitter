@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 
-    <title>Fitter-IA</title>
+    <title>Post</title>
     <link rel="stylesheet" href="">
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/global.css">
@@ -15,9 +15,8 @@
 
 <body>
     <style>
-        div.card {
-            max-width: 75%;
-            width: fit-content;
+        body {
+            overflow-x: hidden;
         }
     </style>
     <div class="container-fluid">
@@ -42,7 +41,7 @@
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a href="../controller/perfilController.php?usuario=<?php session_start(); print($_SESSION["nombre"]) ?>" class="nav-link active  align-middle px-0">
+                            <a href="../controller/perfilController.php?usuario=<?php print($_SESSION["nombre"]) ?>" class="nav-link active  align-middle px-0">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" fill="currentColor" class="bi bi-person mb-2" viewBox="0 0 16 16">
                                     <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z" />
                                 </svg>
@@ -93,32 +92,62 @@
             <div class="col">
 
                 <div class="row">
-                    <h1 class="text-secondary pt-3" for="">Fitter-IA</h1>
+                    <h1 class="text-secondary pt-3" for="">POST</h1>
                     <div class="row">
                         <hr class="separadorTitulo">
                     </div>
 
-
-                    <div class="row d-flex justify-content-center">
-                        <div class="col m-3 " style="max-width: 1150px;">
-                            <h4 class="text-secondary">Consejos:</h4>
-                            <p>Esto es un chat con inteligencia artificial,te podrá servir de ayuda en temas de nutrición,
-                                rutinas, contrastar información deportiva, etc. Cada persona es diferente por lo tanto recuerda que lo mejor
-                                es acudir a un profesional para que evalue tus necesidades físicas. Disfruta de Fitter-IA y sigue luchando por tus objetivos! </p>
-
-                            <div id="chat" class="row mb-3 d-flex align-items-center flex-column">
-
+                    <div class="row d-flex justify-content-center m-1 mt-4">
+                        <div class="card w-100 mb-4" style="max-width:800px;">
+                            <div class="row my-2 mx-1">
+                                <div class="col-3 ">
+                                    <img src="<?php print($datosPost[0]['avatar']) ?>" class="rounded-circle border" style="width: 100%; height:auto; max-width:70px;" alt="">
+                                </div>
+                                <div class="col-9">
+                                    <a href="../controller/perfilController.php?usuario=<?php print($datosPost[0]['nombrePerfil']) ?>" class="link-secondary" style="text-decoration: none;">
+                                        <h2><?php print($datosPost[0]['nombrePerfil']) ?></h2>
+                                    </a>
+                                    <p><?php print($datosPost[0]['textoPost']) ?></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <img src="<?php print($datosPost[0]['filePost']) ?>" class="img-fluid mb-2" alt="">
                             </div>
 
-                            <form id="ia" style="padding: 0; margin:0;">
-
-                                <input type="search" id="pregunta" class=" form-control rounded w-100" placeholder="Pregúntame lo que quieras" aria-label="Search" aria-describedby="search-addon" />
-
-                                <button type="submit" id="enviar" class="btn btn-secondary mb-3 mt-3">Enviar</button>
-                            </form>
-
-
                         </div>
+                        <form style="max-width: 1200px;" action="../controller/postController.php?post=<?php print($datosPost[0]['idPost']) ?>" method="POST">
+                            <h3 class="text-secondary">Inserte un comentario</h3>
+                            <div class="mb-3">
+
+                                <textarea class="form-control" name="texto" id="" rows="2" required></textarea>
+
+                            </div>
+                            <div class="col-md-8 d-flex justify-content-start">
+                                <button type="submit" class="btn btn-secondary mb-3">Enviar</button>
+                            </div>
+                        </form>
+                        <ul id="comentarios" class="row mb-3 d-flex align-items-center flex-column">
+                            <?php
+                            for ($i = 0; $i < count($comentarios); $i++) {
+                                print('<li class="card w-100 mb-4" style="max-width:800px;">
+                        <div class="row my-2 mx-1">
+                        <div class="col-3 ">
+                          <img src="' . $comentarios[$i]['avatar'] . '" class="rounded-circle border" style="width: 100%; height:auto; max-width:70px;" alt="">
+                     </div>
+                        <div class="col-9">
+                           <a href="../controller/perfilController.php?usuario=' . $comentarios[$i]['nombrePerfil'] . '" class="link-secondary" style="text-decoration: none;">
+                          <h2>' . $comentarios[$i]['nombrePerfil'] . '</h2>
+                         </a>
+                            <p>' . $comentarios[$i]['texto'] . '</p>
+                      </div>
+                           </div>
+                         
+                         </li>');
+                            } ?>
+
+                        </ul>
+
+
                     </div>
 
                 </div>
@@ -127,34 +156,6 @@
     </div>
     </div>
 
-
-    <script src="../bootstrap-5.2.3/dist/js/bootstrap.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-    <script>
-        $(document).ready(function() {
-            $("#ia").on("submit", function(e) {
-                e.preventDefault();
-                $valor = $("#pregunta").val();
-                $pregunta = '<div id="gregunta" class="card p-2 w-75 align-self-end m-1"><h5 class="text-secondary">Pregunta:</h5><p>' + $valor + '</p></div>';
-                $("#chat").append($pregunta);
-                $("#pregunta").val('');
-                $loader = '<div class="spinner-border align-self-start text-secondary" id="loader" role="status"></div>';
-                $("#chat").append($loader);
-
-                $.ajax({
-                    url: '../services/fitterIA.php',
-                    type: 'POST',
-                    data: 'text=' + $valor,
-                    success: function(data) {
-                        $respuesta = '<div id="respuesta" class="card p-2 w-75 align-self-start m-1"><h5 class="text-secondary">Fitter-IA:</h5><p>' + data + '</p></div>';
-                        $("#chat").append($respuesta);
-                        $("html, body").scrollTop($(document).height());
-                        $("#loader").remove();
-                    }
-                });
-            });
-        });
-    </script>
 </body>
 
 </html>

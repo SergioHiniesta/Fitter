@@ -80,15 +80,16 @@ class Utils
   //Funcion que envia el correo de registro
   public static function correo_registro($usuario)
   {
+    $url = 'https://api.sendinblue.com/v3/smtp/email';
+    $apiKey = '';
+
+
     $to = $usuario["email"];
     $subject = "Activa tu Cuenta";
     $message = "<b>Bienvenido a Fitter</b>";
     $message .= "<h1>Por favor confirma tu email</h1>";
     $message .= "<p>Tu código de activación es el siguiente:</p>";
     $message .= "<p>" . $usuario["codActivacion"] . "</p>";
-
-    $apiKey = '';
-    $url = 'https://api.sendinblue.com/v3/smtp/email';
 
     $data = array(
       'sender' => array('name' => 'Fitter', 'email' => 'no-reply@fitter.com'),
